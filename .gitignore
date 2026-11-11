@@ -1,0 +1,6 @@
+# plaintext build products and tooling never leave this machine
+_build/
+_tools/
+_progress.json
+.DS_Store
+._*
