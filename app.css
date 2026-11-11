@@ -277,3 +277,13 @@ table.imt td.im img{width:100%;max-height:200px;object-fit:contain;background:#f
 .sk .thumbs{margin-top:0}.sk .thumbs img{width:64px;height:48px}
 .skmore{display:inline-flex;align-items:center;justify-content:center;width:40px;height:48px;border-radius:5px;border:1px dashed #d9b46a;font-family:var(--mono);font-size:11px;color:#8a5a00;cursor:pointer}
 tr.barow td{background:#f7f5ef;padding:8px 16px}
+
+/* collapsible why-wrong: compact by default */
+td.dis .dis-full{display:none}
+tr.row.why-open td.dis .dis-full,body.why-on td.dis .dis-full{display:block}
+tr.row.why-open td.dis .dis-chips,body.why-on td.dis .dis-chips{display:none}
+body.why-on td.dis .dis-full .whybtn{display:none}
+td.dis .dis-chips .q{font-size:10px;padding:1px 5px;margin:0 3px 3px 0;display:inline-block}
+.whybtn{border:0;background:none;color:var(--warn);font-family:var(--mono);font-size:10.5px;cursor:pointer;padding:2px 0;display:block}
+body:not(.why-on) col.c-ess{width:30%}body:not(.why-on) col.c-bz{width:18%}body:not(.why-on) col.c-ai{width:14%}
+body:not(.why-on) col.c-dis{width:8%}

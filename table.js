@@ -39,6 +39,8 @@
     }).join('');
     const al = (e.al || []).filter(a => a.toLowerCase() !== e.n.toLowerCase());
     const ans = (e.ans || []).map(([q, r]) => `<button class="q" data-q="${q}" title="${r === 'v' ? 'vignette diagnosis' : 'correct answer'}">${q}${r === 'v' ? '·dx' : ''}</button>`).join('');
+    const disChips = (e.dis || []).map(([q, L, t, sids]) =>
+      `<button class="q d" data-q="${q}" data-s="${sids.map(s => s.split('.')[1]).join(',')}" title="${L}) ${esc(t)}">${q}</button>`).join('');
     const dis = (e.dis || []).map(([q, L, t, sids]) => `<div class="dq">${`<button class="q d" data-q="${q}" data-s="${sids.map(s => s.split('.')[1]).join(',')}">${q}</button>`}` +
       ` <span class="opt">${L}) ${esc(t)}</span>` + (sids.length ? `<ul class="sl">${sids.map(s => `<li>${S1.markText(D.S[s], D.M[s])}${flag(s)}</li>`).join('')}</ul>` : '') + '</div>').join('');
     const cw = (e.cw || []).map(([c, n]) => ENT[c] ? `<a href="${S1.entHref(c)}" data-jump="${c}">${esc(ENT[c].n)}<span>×${n}</span></a>` : '').join('');
@@ -59,7 +61,7 @@
       <td class="bz${e.bz && e.bz.length ? '' : ' isempty'}" data-h="Boards say">${list(e.bz, 4)}</td>
       <td class="ai-c${ai ? '' : ' isempty'}" data-h="🧠 Learning aid">${ai}</td>
       <td class="ans${ans ? '' : ' isempty'}" data-h="Tested as answer">${ans || '<span class="empty">never</span>'}</td>
-      <td class="dis${dis ? '' : ' isempty'}" data-h="Distractor in">${dis}</td>
+      <td class="dis${dis ? '' : ' isempty'}" data-h="Distractor in">${dis ? `<div class="dis-chips">${disChips}<button class="whybtn" data-why>why ▸</button></div><div class="dis-full">${dis}<button class="whybtn" data-why>hide ▴</button></div>` : ''}</td>
       <td class="cw${cw ? '' : ' isempty'}" data-h="Confused with">${cw}</td></tr>`;
   }
   function extraHTML(id, e) {
@@ -203,8 +205,16 @@
       apply();
     });
     $('#imgonly').onchange = ev => { st.img = ev.target.checked; apply(); };
+    const wa = $('#whyall');
+    if (wa) {
+      let on = false; try { on = localStorage.getItem('s1r.why') === '1'; } catch (e) { }
+      wa.checked = on; document.body.classList.toggle('why-on', on);
+      wa.onchange = () => { document.body.classList.toggle('why-on', wa.checked); try { localStorage.setItem('s1r.why', wa.checked ? '1' : '0'); } catch (e) { } };
+    }
     $('#tb').addEventListener('click', ev => {
       const t = ev.target;
+      const wb = t.closest('[data-why]');
+      if (wb) { wb.closest('tr').classList.toggle('why-open'); return; }
       const skm = t.closest('.skmore');
       if (skm) {
         const r = rows.find(r => r.tr === skm.closest('tr')), box = skm.parentNode;
@@ -233,6 +243,7 @@
       else if (r && ev.key === '2') setMark(r, 's');
       else if (r && ev.key === '0') { S1.mark(r.id, ''); $$('.marks button[data-mk]', r.tr).forEach(b => b.classList.remove('on')); progress(); }
       else if (r && ev.key === 'e' && r.x) { r.x.classList.toggle('hide'); S1.lazy(r.x); }
+      else if (r && ev.key === 'w') r.tr.classList.toggle('why-open');
     });
   }
   function jump(id) {

@@ -136,7 +136,7 @@ const S1 = (() => {
       <div id="help"><h3 style="margin:0 0 8px;font-family:var(--serif)">Keyboard</h3><table>
         <tr><td><kbd>/</kbd></td><td>search</td></tr><tr><td><kbd>j</kbd> <kbd>k</kbd></td><td>next / previous row</td></tr>
         <tr><td><kbd>1</kbd> <kbd>2</kbd> <kbd>0</kbd></td><td>mark know / shaky / clear</td></tr>
-        <tr><td><kbd>e</kbd></td><td>open / close the extra row</td></tr><tr><td><kbd>Esc</kbd></td><td>close panel / image</td></tr>
+        <tr><td><kbd>e</kbd></td><td>open / close the extra row</td></tr><tr><td><kbd>w</kbd></td><td>show / hide why-wrong for the row</td></tr><tr><td><kbd>Esc</kbd></td><td>close panel / image</td></tr>
         <tr><td><kbd>?</kbd></td><td>this help</td></tr></table></div>`);
     $('#scrim').onclick = closePanel;
     $('#panel [data-x]').onclick = closePanel;
